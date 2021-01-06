@@ -1,0 +1,76 @@
+included:
+  - Project
+  - Tests
+  - ../
+excluded:
+  - Pods
+analyzer_rules:
+  - unused_declaration
+  - unused_import
+disabled_rules:
+  - variable_name
+  - nesting
+  - function_parameter_count
+opt_in_rules:
+  - control_statement
+  - empty_count
+  - trailing_newline
+  - colon
+  - comma
+force_cast: warning
+identifier_name:
+  excluded:
+    - id
+force_try:
+  severity: warning
+  
+cyclomatic_complexity:
+    warning: 13
+    
+line_length:
+  warning: 120
+  ignores_function_declarations: true
+  ignores_comments: true
+  ignores_interpolated_strings: true
+  ignores_urls: true
+
+type_body_length:
+  - 300
+  - 400
+
+file_length:
+  warning: 500
+  error: 800
+
+large_tuple:
+   - 3
+   - 4
+   
+type_name:
+  min_length: 4
+  max_length:
+    warning: 30
+    error: 35
+  excluded: iPhone
+reporter: "xcode"
+custom_rules:
+  rule_id:
+    included: Source/SwiftLintFramework/Rules/.+/\w+\.swift
+    name: Rule ID
+    message: Rule IDs must be all lowercase, snake case and not end with `rule`
+    regex: identifier:\s*("\w+_rule"|"\S*[^a-z_]\S*")
+    severity: error
+  fatal_error:
+    name: Fatal Error
+    excluded: "Tests/*"
+    message: Prefer using `queuedFatalError` over `fatalError` to avoid leaking compiler host machine paths.
+    regex: \bfatalError\b
+    match_kinds:
+      - identifier
+    severity: error
+  rule_test_function:
+    included: Tests/SwiftLintFrameworkTests/RulesTests.swift
+    name: Rule Test Function
+    message: Rule Test Function mustn't end with `rule`
+    regex: func\s*test\w+(r|R)ule\(\)
+    severity: error
